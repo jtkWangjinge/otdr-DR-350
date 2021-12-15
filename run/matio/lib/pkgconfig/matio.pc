@@ -1,0 +1,10 @@
+prefix=/home/wangjinge/project/CrossCompile/matio-1.5.12/install
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: MATIO
+Description: MATIO Library
+Version: 1.5.12
+Libs: -L${libdir} -lmatio  -L/home/wangjinge/project/CrossCompile/zlib-1.2.11/install-dir/lib -lz
+Cflags: -I${includedir}  -I/home/wangjinge/project/CrossCompile/zlib-1.2.11/install-dir/include

@@ -1,0 +1,37 @@
+#!/bin/sh
+# This is the first script called by init process
+#/sbin/ifconfig eth0 192.168.9.201 up
+
+/bin/mount -a
+/bin/mount -t ramfs none /mnt
+/bin/mount -t ramfs none /tmp
+
+/bin/udevd --daemon
+/bin/udevstart
+
+hwclock -w
+
+#echo 148 > sys/class/gpio/export
+#echo out > sys/class/gpio/gpio148/direction
+#echo 0 > sys/class/gpio/gpio148/value
+#echo 151 > sys/class/gpio/export
+#echo out > sys/class/gpio/gpio151/direction
+#echo 0 > sys/class/gpio/gpio151/value
+#network power 0:on 1:off
+#echo 131 > sys/class/gpio/export
+#echo out > sys/class/gpio/gpio131/direction
+#echo 1   > sys/class/gpio/gpio131/value
+#wireless power 0:on 1:off
+#echo 158 > sys/class/gpio/export
+#echo out > sys/class/gpio/gpio158/direction
+#echo 0   > sys/class/gpio/gpio158/value
+
+/bin/mount -t yaffs2 /dev/mtdblock10 /app
+mkdir /mnt/dataDisk/
+/bin/mount -t yaffs2 /dev/mtdblock11 /mnt/dataDisk
+
+chmod +x /mnt/sdcard/init.sh
+/mnt/sdcard/init.sh
+
+chmod +x /app/otdrStart.sh
+/app/otdrStart.sh

@@ -1,0 +1,103 @@
+/*******************************************************************************
+* Copyright(c)2020，捷太科仪器(苏州)有限公司
+*
+* All rights reserved
+*
+* 文件名称：  app_sola_algorithm_parameters.c
+* 摘    要：  sola算法参数设置
+*
+* 当前版本：  v1.0.0 
+* 作    者：  sjt
+* 完成日期：  2020-8-21
+*
+*******************************************************************************/
+
+#include "app_sola_algorithm_parameters.h"
+
+// 不同量程下使用的脉宽的任务数目
+//const int SOLAPulseNum[OPM_DISTRANGE_KIND] = {1, 5, 5, 5, 5, 5, 5, 5, 5, 5};
+const int SOLAPulseNum[OPM_DISTRANGE_KIND] = { 1, 3, 3, 3, 3, 3, 3, 3, 3, 3 };
+
+// sola模式测试时，每个脉宽的每个任务的滤波系数 (列数:脉宽个数，行数:每个脉宽的任务个数)
+const  OPM_FILTER solaFilters[OPM_PULSE_KIND][MAX_DAQ_NUM] = 
+{
+	{_IIR_128, _IIR_128, _IIR_128, _IIR_128, _IIR_128, _IIR_128, _IIR_128, _IIR_128},		// auto
+	{_IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512},		// 5ns
+	{_IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512},		// 10ns
+	{_IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512},		// 20ns
+	{_IIR_256, _IIR_256, _IIR_256, _IIR_256, _IIR_256, _IIR_256, _IIR_256, _IIR_256}, 		// 50ns
+	{_IIR_256, _IIR_256, _IIR_256, _IIR_256, _IIR_256, _IIR_256, _IIR_256, _IIR_256},		// 100ns
+	{_IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512},		// 200ns
+	{_IIR_256, _IIR_256, _IIR_256, _IIR_256, _IIR_256, _IIR_256, _IIR_256, _IIR_256},		// 500ns
+	{_IIR_256, _IIR_256, _IIR_256, _IIR_256, _IIR_256, _IIR_256, _IIR_256, _IIR_256},		// 1us
+	{_IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512},		// 2us
+	{_IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512},		// 10us
+	{_IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512, _IIR_512},		// 20us
+};
+/*
+// 各个量程下使用的脉冲宽度
+const OPM_PULSE SOLAChosedPulses[OPM_DISTRANGE_KIND][5] = 
+{
+	{ENUM_PULSE_1US, ENUM_PULSE_1US, ENUM_PULSE_1US, ENUM_PULSE_1US},							//auto
+	{ENUM_PULSE_10NS, ENUM_PULSE_20NS, ENUM_PULSE_200NS, ENUM_PULSE_1US, ENUM_PULSE_2US},		// 0.5km
+	{ENUM_PULSE_10NS, ENUM_PULSE_20NS, ENUM_PULSE_200NS, ENUM_PULSE_1US, ENUM_PULSE_2US},		// 1km
+	{ENUM_PULSE_10NS, ENUM_PULSE_20NS, ENUM_PULSE_200NS, ENUM_PULSE_1US, ENUM_PULSE_2US},		// 2km
+	{ENUM_PULSE_10NS, ENUM_PULSE_20NS, ENUM_PULSE_200NS, ENUM_PULSE_1US, ENUM_PULSE_2US},		// 5km
+	{ENUM_PULSE_10NS, ENUM_PULSE_20NS, ENUM_PULSE_200NS, ENUM_PULSE_1US, ENUM_PULSE_2US},		// 10km
+	{ENUM_PULSE_10NS, ENUM_PULSE_20NS, ENUM_PULSE_200NS, ENUM_PULSE_2US, ENUM_PULSE_10US},		// 20km
+	{ENUM_PULSE_10NS, ENUM_PULSE_20NS, ENUM_PULSE_200NS, ENUM_PULSE_2US, ENUM_PULSE_10US},		// 50km
+	{ENUM_PULSE_10NS, ENUM_PULSE_20NS, ENUM_PULSE_200NS, ENUM_PULSE_2US, ENUM_PULSE_20US},		// 100km
+	{ENUM_PULSE_10NS, ENUM_PULSE_20NS, ENUM_PULSE_200NS, ENUM_PULSE_2US, ENUM_PULSE_20US},		// 200km
+};
+*/
+// 各个量程下使用的脉冲宽度
+const OPM_PULSE SOLAChosedPulses[OPM_DISTRANGE_KIND][5] =
+{
+	{ ENUM_PULSE_1US, ENUM_PULSE_1US, ENUM_PULSE_1US, ENUM_PULSE_1US},							//auto
+	{ ENUM_PULSE_5NS, ENUM_PULSE_20NS, ENUM_PULSE_100NS, ENUM_PULSE_1US, ENUM_PULSE_2US },		// 0.5km
+	{ ENUM_PULSE_5NS, ENUM_PULSE_50NS, ENUM_PULSE_200NS, ENUM_PULSE_1US, ENUM_PULSE_2US },		// 1km
+	{ ENUM_PULSE_5NS, ENUM_PULSE_100NS, ENUM_PULSE_500NS, ENUM_PULSE_1US, ENUM_PULSE_2US },		// 2km
+	{ ENUM_PULSE_5NS, ENUM_PULSE_100NS, ENUM_PULSE_1US, ENUM_PULSE_1US, ENUM_PULSE_2US },		// 5km
+	{ ENUM_PULSE_5NS, ENUM_PULSE_100NS, ENUM_PULSE_1US, ENUM_PULSE_1US, ENUM_PULSE_2US },		// 10km
+	{ ENUM_PULSE_5NS, ENUM_PULSE_100NS, ENUM_PULSE_1US, ENUM_PULSE_2US, ENUM_PULSE_10US },		// 20km
+	{ ENUM_PULSE_10NS, ENUM_PULSE_200NS, ENUM_PULSE_2US, ENUM_PULSE_2US, ENUM_PULSE_10US },		// 50km
+	{ ENUM_PULSE_10NS, ENUM_PULSE_200NS, ENUM_PULSE_2US, ENUM_PULSE_2US, ENUM_PULSE_20US },		// 100km
+	{ ENUM_PULSE_10NS, ENUM_PULSE_200NS, ENUM_PULSE_10US, ENUM_PULSE_2US, ENUM_PULSE_20US },	// 200km
+};
+
+// 移相次数表
+const unsigned int iSOLAPhaseShiftReg[OPM_DISTRANGE_KIND] = 
+{
+		INTP01_01,				// auto
+		INTP01_64, 				// 0.5km
+		INTP01_64,				// 1km
+		INTP01_32, 				// 2km
+		INTP01_16, 				// 5km
+		INTP01_08, 				// 10km
+		INTP01_04, 				// 20km
+		INTP01_02, 				// 50km
+		INTP01_01, 				// 100km
+		INTP01_01, 				// 200km
+};
+
+// 采样比率表
+const float fSOLASampleRatio[OPM_DISTRANGE_KIND] = 
+{
+		SMP_COUNT01_01, 			// auto
+		SMP_COUNT01_64, 			// 0.5km
+		SMP_COUNT01_64, 			// 1km
+		SMP_COUNT01_32, 			// 2km
+		SMP_COUNT01_16, 			// 5km
+		SMP_COUNT01_08, 			// 10km
+		SMP_COUNT01_04, 			// 20km
+		SMP_COUNT01_02, 			// 50km
+		SMP_COUNT01_01, 			// 100km
+		SMP_COUNT01_01, 			// 200km
+};
+
+// 每个脉宽循环次数
+const int perPulseLoopNum[] = { 1, 5, 5, 7, 7, 6, 7, 6, 6, 8, 8, 8 };
+
+// 每个脉宽测试时设置的采样间隔
+const unsigned int perPulseAdcGap[OPM_PULSE_KIND] = 
+	{ 0x200, 0x200, 0x200, 0x200, 0x200, 0x200, 0x200, 0x200, 0x200, 0x200, 0x200, 0x200 };
